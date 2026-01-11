@@ -22,8 +22,9 @@ int PopRed(Pozicija);
 int izbrisiListu(Pozicija);
 
 int main() {
-	Pozicija head = createNode();
-	if (head == NULL) {
+	Pozicija headStog = createNode();
+	Pozicija headRed = createNode();
+	if (headStog == NULL || headRed == NULL) {
 		return 1;
 	}
 	int broj = 0;
@@ -52,7 +53,7 @@ int main() {
 				case 1: {
 					printf("Unesi broj: ");
 					scanf_s(" %d", &broj);
-					int output = PushStog(head, broj);
+					int output = PushStog(headStog, broj);
 					if (output != 0 && output != 3)
 						odabir2 = 0;
 					break;
@@ -60,7 +61,7 @@ int main() {
 				case 2: {
 					srand((unsigned int)time(NULL));
 					broj = rand() % (100 - 10 + 1) + 10;
-					int output = PushStog(head, broj);
+					int output = PushStog(headStog, broj);
 					if (output != 0 && output != 3)
 						odabir2 = 0;
 					else if (output == 3) {
@@ -70,7 +71,7 @@ int main() {
 					break;
 				}
 				case 3: {
-					int rezultat = PopStog(head);
+					int rezultat = PopStog(headStog);
 					if (rezultat == 0) {
 						printf("Uspjesno izbrisan element sa stoga!\n");
 					}
@@ -84,7 +85,7 @@ int main() {
 					break;
 				}
 				case 4: {
-					ispis(head);
+					ispis(headStog);
 					break;
 				}
 				default: {
@@ -107,7 +108,7 @@ int main() {
 				case 1: {
 					printf("Unesi broj: ");
 					scanf_s(" %d", &broj);
-					int output = PushRed(head, broj);
+					int output = PushRed(headRed, broj);
 					if (output < 0)
 						odabir2 = 0;
 					else
@@ -118,7 +119,7 @@ int main() {
 				case 2: {
 					srand((unsigned int)time(NULL));
 					broj = rand() % (100 - 10 + 1) + 10;
-					int output = PushRed(head, broj);
+					int output = PushRed(headRed, broj);
 					if (output < 0)
 						odabir2 = 0;
 					else
@@ -126,7 +127,7 @@ int main() {
 					break;
 				}
 				case 3: {
-					int rezultat = PopRed(head);
+					int rezultat = PopRed(headRed);
 					if (rezultat == 0) {
 						printf("Uspjesno izbrisan element sa stoga!\n");
 					}
@@ -140,7 +141,7 @@ int main() {
 					break;
 				}
 				case 4: {
-					ispis(head);
+					ispis(headRed);
 					break;
 				}
 				default: {
@@ -158,8 +159,14 @@ int main() {
 			printf("NEMA RADNJE ZA TAJ ODABIR, POKUSAJ PONOVNO!\n");
 		}
 	}
-	izbrisiListu(head);
-	free(head);
+	izbrisiListu(headStog);
+	free(headStog);
+	headStog = NULL;
+	current = 0;
+	max = 0;
+	izbrisiListu(headRed);
+	free(headRed);
+	headRed = NULL;
 	return 0;
 }
 Pozicija createNode() {
